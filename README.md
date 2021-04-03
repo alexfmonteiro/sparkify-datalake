@@ -63,14 +63,14 @@ After that, the data was transformed into the following schema using Spark dataf
 
 ### Prerequisites
 
-The solution was built using Python 3.6.3 and PySpark 2.4.3. For the complete package list used to build and run this application, please refer to the file [requirements-env.txt](https://github.com/alexfmonteiro/sparkify-datalake/blob/main/requirements.txt). The complete environment packages was also exported using `conda` into the file [environment.yaml](https://github.com/alexfmonteiro/sparkify-datalake/blob/main/environment.yaml). 
+The solution was built using Python 3.6.3 and PySpark 2.4.3. For the complete package list used to build and run this application, please refer to the file [requirements.txt](https://github.com/alexfmonteiro/sparkify-datalake/blob/main/requirements.txt). The complete environment packages was also exported using `conda` into the file [environment.yaml](https://github.com/alexfmonteiro/sparkify-datalake/blob/main/environment.yaml). 
 
 
 ### How to run
 
 1. Update the file [dl.cfg](https://github.com/alexfmonteiro/sparkify-redshift/blob/main/dl.cfg) with your AWS credentials.
 
-2. Create an S3 bucket to be used as the parquet files destination and update the file [dl.cfg](https://github.com/alexfmonteiro/sparkify-redshift/blob/main/dl.cfg) with the S3 bucket path.
+2. Create an S3 bucket to be used as the parquet files destination and update the file [dl.cfg](https://github.com/alexfmonteiro/sparkify-datalake/blob/main/dl.cfg) with the S3 bucket path.
 
 3. Then, run the application via CLI:
 
