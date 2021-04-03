@@ -46,7 +46,7 @@ def process_song_data(spark, input_data, output_data):
                                StructField("year", IntegerType(), True)])
     
     # read song data file
-    df = spark.read.json(song_data)
+    df = spark.read.json(song_data, songs_schema)
     df.show(5)
 
     # extract columns to create songs table, also remove duplicates
@@ -111,7 +111,7 @@ def process_log_data(spark, input_data, output_data, is_sample):
     
     # write time table to parquet files partitioned by year and month
     time_table.show(5)
-    time_table.write.mode("overwrite").parquet(output_data + 'time/')
+    time_table.write.mode("overwrite").parquet(output_data + 'time/').repartition('title')
 
     # read in song data to use for songplays table
     songs_df = spark.read.parquet(output_data + '/songs').repartition('title')
