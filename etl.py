@@ -14,6 +14,9 @@ os.environ['AWS_ACCESS_KEY_ID'] = config.get('AWS','AWS_ACCESS_KEY_ID')
 os.environ['AWS_SECRET_ACCESS_KEY'] = config.get('AWS','AWS_SECRET_ACCESS_KEY')
 
 def create_spark_session():
+    """
+    creates spark session
+    """
     spark = SparkSession.builder \
                         .appName("Sparkify Datalake App") \
                         .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:2.7.0") \
@@ -21,8 +24,14 @@ def create_spark_session():
     return spark
 
 def process_song_data(spark, input_data, output_data):
+    """
+    retrieves song data json files from the path derived from input_data
+    creates a schema for the songs retrieved
+    creates the songs_table and writes its data as parquet files in the output_data path
+    created the artists_table and writes its data as parquet files in the output_data path
+    """
     # get filepath to song data file
-    song_data = os.path.join(input_data, 'song_data/A/A/B/*.json')
+    song_data = os.path.join(input_data, 'song_data/*/*/*/*.json')
     print("song data path: ", song_data)
 
     songs_schema = StructType([StructField("num_songs", IntegerType(), True),
@@ -55,6 +64,12 @@ def process_song_data(spark, input_data, output_data):
     artists_table.write.mode("overwrite").parquet(output_data + 'artists/')
 
 def process_log_data(spark, input_data, output_data, is_sample):
+    """
+    retrieves logs data json files from the path derived from input_data
+    creates the users_table and writes its data as parquet files in the output_data path
+    creates the time table and writes its data as parquet files in the output_data path
+    creates the songplay table and writes its data as parquet files in the output_data path
+    """
     # get filepath to log data file
     log_data = input_data + "log_data/*.json" if is_sample else input_data + "log_data/*/*/*.json"
 
@@ -120,6 +135,11 @@ def process_log_data(spark, input_data, output_data, is_sample):
 
 
 def main():
+    """
+    creates spark session
+    configure input and output data paths
+    calls process_song_data and process_log_data
+    """
     spark = create_spark_session()
     spark.conf.set("spark.sql.shuffle.partitions", 64)
     input_data = config.get('S3','INPUT_DATA')
